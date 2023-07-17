@@ -1,17 +1,18 @@
 const express = require('express');
 const userRouter = express.Router();
-const User = require('../models/user.model');
+const {UserModel} = require('../model/user.model');
+
 
 userRouter.post('/register', async (req, res) => {
   try {
     const { username, email } = req.body;
-    const user = await User.create({ username, email });
+    const user = await UserModel.create({ username, email });
     res.status(201).json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(500).json({ error: 'Failed to add user' });
   }
 });
+
 
 userRouter.get('/', async (req, res) => {
   try {
@@ -23,4 +24,4 @@ userRouter.get('/', async (req, res) => {
   }
 });
 
-module.exports = { userRouter };
+module.exports = {userRouter};
